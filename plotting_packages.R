@@ -243,5 +243,10 @@ monthly <- data %>% group_by(year, month) %>% summarise(total = n())
 dygraph(ts(monthly$total, frequency = 12)) %>% dyRangeSelector()
 
 
-#Rmarkdown/shiny page w tabs for 1) list of user instaled packages, 2) cookbook of r commands (base ploting, ggplot, highcharter, dplyr commands, timeseries ideas, regression...)
-
+hc <- highchart() %>% 
+  hc_xAxis(categories = citytemp$month) %>% 
+  hc_add_series(name = "Tokyo", data = citytemp$tokyo) %>% 
+  hc_add_series(name = "London", data = citytemp$london) %>% 
+  hc_add_series(name = "Other city",
+                data = (citytemp$tokyo + citytemp$london)/2)
+hc
