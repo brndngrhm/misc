@@ -2,7 +2,7 @@
 title: "Fatal Police Shootings Analysis"
 output: 
   flexdashboard::flex_dashboard:
-    orientation: rows
+    vertical_layout: scroll
 
 ---
 
@@ -91,29 +91,27 @@ data$count[is.na(data$count)] <- 0
 
 ```
 
-Column {data-width=650}
 -----------------------------------------------------------------------
 
 ### Fatal Shootings by Police by State (2015)
-```{r}
+```{r,echo = T, fig.width=10, fig.height=7}
 #plot of shootings by state
 hchart(subset(data$state, data$year == "2015"), name = "Shootings")
 ```
 
 
-Column {data-width=350}
 -----------------------------------------------------------------------
 
 ### Shootings by police by Race (2015)
 
-```{r}
+```{r, echo = T}
 #plot of shootings by race
 hchart(subset(data$race2, data$year == "2015"), name = "2015 Shootings", colorByPoint = T)
 ```
 
 ### Forecast of Fatal police Shootings
 
-```{r}
+```{r,echo = T}
 monthly <- data %>% group_by(year, month) %>% summarise(total = n())
 total <- ts(monthly$total, frequency = 12)
 airforecast <- forecast(auto.arima(total), level = 95)
