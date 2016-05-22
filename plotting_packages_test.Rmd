@@ -104,13 +104,13 @@ data$count[is.na(data$count)] <- 0
 ### Basic Bar Chart
 ```{r,echo = T, fig.width=15, fig.height=7}
 #plot of shootings by state
-state <- data %>% dplyr::filter(year == "2015") %>% group_by(state) %>% summarise(total = n())
+state <- data %>% dplyr::filter(year == "2015") %>% group_by(state, pop) %>% summarise(total = n())
 
 (state.plot <- highchart() %>%
-  hc_add_series(name="Shootings", data = state$total, type = "column") %>%
+  hc_add_series(name="Shootings", data = ((state$total/state$pop)*100), type = "column") %>%
   hc_xAxis(categories = state$state, color ="#2ecc71") %>%
   hc_title(text="Fatal Shootings by Police", align="left") %>%
-  hc_subtitle(text="2015", align="left") %>%
+  hc_subtitle(text="Per Capita, 2015", align="left") %>%
    hc_yAxis(title=" ") %>%
    hc_exporting(enabled = TRUE) %>%
    hc_credits(enabled = TRUE, # add credits
@@ -148,7 +148,7 @@ race2 <- data %>% dplyr::filter(year == "2015") %>% group_by(race2) %>% summaris
 monthly <- data %>% group_by(year, month) %>% summarise(total = n()) %>% na.omit(monthly)
 
 (ts.plot <- highchart() %>%
-  hc_xAxis(categories = monthly$month, colors = line.color) %>%
+  hc_xAxis(categories = monthly$month) %>%
   hc_add_series(name = "Number of Shootings", data = subset(monthly$total, monthly$year == "2015", colors = line.color)) %>%
   hc_yAxis(title = "") %>%
   hc_title(text="Fatal Shootings by Police", align = "left", useHTML = TRUE) %>%
