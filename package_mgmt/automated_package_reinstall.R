@@ -14,7 +14,7 @@ myPath = c("C:/Users/GRA/Documents/R/win-library/3.3")
 package_df <- as.data.frame(installed.packages(myPath))  
 
 #saves as data frame
-save(package_df, file = "C:/Users/GRA/Desktop/Misc/R Working Directory/Other/misc/package_mgmt/packages_23MAY2016.rda")
+save(package_df, file = "C:/Users/GRA/Desktop/Misc/R Working Directory/Other/misc/package_mgmt/packages_24MAY2016.rda")
 
 ------
 
