@@ -343,6 +343,8 @@ hchart(mv.ts) %>%
 
 
 
+
+
 ## dygraph (Time Series Plots Only) {.tabset}
 
 ### Multivariate TS Plot w/ Custom Colors
@@ -411,10 +413,32 @@ dygraph(all, main="PHL Monthly Pax", ylab = "Monthly Passengers (000s)") %>%
 ```
 
 
+
 ## Plotly {.tabset}
-guide for using with R - https://plot.ly/r/
-using with ggplot2 - https://plot.ly/ggplot2/
+
+guide for using with R - https://plot.ly/r/  
+
+using with ggplot2 - https://plot.ly/ggplot2/  
+
+cheatsheet - https://images.plot.ly/plotly-documentation/images/r_cheat_sheet.pdf
+
+### Boxplot
+```{r, echo=T}
+race2 <- data %>% dplyr::filter(year == "2015") %>% group_by(race2) %>% summarise(total = n())
+
+(p <- plot_ly(na.omit(subset(data, data$age > 0)), y=age, x = race2, color = race2, type = "box") %>% 
+  layout(title = "Distribution of Victim Age by Race", xaxis = list(title="Race"), yaxis = list(title="Age")) %>% 
+  layout(showlegend = FALSE))
+
+```
 
 
+### Bubble Chart
+```{r, echo = T}
+data2 <- data %>% group_by(date, race2) %>% summarise(total = n())
 
+plot_ly(data2, x = date, y = total, text = paste("Fatal Shootings ", total),
+        mode = "markers", color = race2)
+
+```
 
