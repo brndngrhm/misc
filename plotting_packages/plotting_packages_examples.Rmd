@@ -1,5 +1,5 @@
 ---
-title: "Plotting Packages"
+title: "Learning Interactive Plotting Packages"
 output: html_document
 ---
 ```{r setup, include=FALSE}
