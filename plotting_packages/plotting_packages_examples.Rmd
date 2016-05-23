@@ -335,3 +335,8 @@ hchart(mv.ts) %>%
   hc_legend(enabled = T)
 ```
 
+## Plotly {.tabset}
+
+## ggvis {.tabset}
+
+## dygraph {.tabset}
