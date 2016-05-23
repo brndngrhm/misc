@@ -320,6 +320,7 @@ hchart(acf) %>%
 ```
 
 ### Multivariate TS Plot
+
 ```{r, echo = T}
 pax.ts <- ts(phl$pax, frequency = 12, start = c(2007, 1), end = c(2015,8))
 price.ts <- ts(phl$price, frequency = 12, start = c(2007, 1), end = c(2015,8))
@@ -335,8 +336,14 @@ hchart(mv.ts) %>%
   hc_legend(enabled = T)
 ```
 
+
+
 ## Plotly {.tabset}
+guide for using with R - https://plot.ly/r/
+using with ggplot2 - https://plot.ly/ggplot2/
+
 
 ## ggvis {.tabset}
 
-## dygraph {.tabset}
+
+## dygraph (Time Series Only) {.tabset}
