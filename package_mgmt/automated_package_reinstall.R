@@ -18,9 +18,9 @@ save(package_df, file = "C:/Users/GRA/Desktop/Misc/R Working Directory/Other/mis
 
 ------
 
-#update R
+#update R, do this in R console
 library(installr)
-installr()
+updateR()
 
 ------  
   
