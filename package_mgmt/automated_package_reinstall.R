@@ -25,7 +25,7 @@ updateR()
 ------  
   
 #Once R is updated, load the dataframe  
-load("C:/Users/GRA/Desktop/Misc/R Working Directory/Other/misc/package_mgmt/packages_23MAY2016.rda")
+package_df <- load("~/R Working Directory/Other/misc/package_mgmt/packages_24MAY2016.rda")
 
 #makes it a list
 package_list <- as.character(package_df$Package)
