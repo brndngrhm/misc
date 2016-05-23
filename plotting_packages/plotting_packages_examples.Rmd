@@ -1,6 +1,9 @@
 ---
 title: "Learning Interactive Plotting Packages"
-output: html_document
+output: 
+  html_document: 
+    theme: spacelab
+    toc: yes
 ---
 ```{r setup, include=FALSE}
 
@@ -338,12 +341,80 @@ hchart(mv.ts) %>%
 
 
 
+
+
+## dygraph (Time Series Plots Only) {.tabset}
+
+### Multivariate TS Plot w/ Custom Colors
+
+```{r, echo=T}
+pax.ts <- ts(phl$pax, frequency = 12, start = c(2007, 1), end = c(2015,8))
+price.ts <- ts(phl$price, frequency = 12, start = c(2007, 1), end = c(2015,8))
+earnings.ts <- ts(phl$earnings, frequency = 12, start = c(2007, 1), end = c(2015,8))
+emp.ts <- ts(phl$emp, frequency = 12, start = c(2007, 1), end = c(2015,8))
+
+mv.ts<- cbind(pax.ts/1000000, price.ts, earnings.ts/1000, emp.ts/1000000)
+
+dygraph(mv.ts, main = "Multivariate Time Series Plot") %>% dyRangeSelector()  %>%
+  dyOptions(colors = RColorBrewer::brewer.pal(4, "Set1"))
+
+```
+
+### Multivariate TS Shaded Plot W/ Event Line
+```{r, echo=T}
+pax.ts <- ts(phl$pax, frequency = 12, start = c(2007, 1), end = c(2015,8))
+price.ts <- ts(phl$price, frequency = 12, start = c(2007, 1), end = c(2015,8))
+earnings.ts <- ts(phl$earnings, frequency = 12, start = c(2007, 1), end = c(2015,8))
+emp.ts <- ts(phl$emp, frequency = 12, start = c(2007, 1), end = c(2015,8))
+
+mv.ts<- cbind(pax.ts/1000000, price.ts, earnings.ts/1000, emp.ts/1000000)
+
+dygraph(mv.ts[,1:2], main = "Monthly PHL Pax (Millions) and Nat'l Fuel Prices") %>% dyRangeSelector()%>%
+  dyOptions(stackedGraph = TRUE) %>%
+  dyRangeSelector(height = 20) %>%
+  dyEvent("2008-07-01", "Start of Great Recession", labelLoc = "bottom")
+
+```
+
+###  TS Plot w/ Custom Moving Avg
+```{r, echo=T}
+pax.ts <- ts(phl$pax/1000, frequency = 12, start = c(2007, 1), end = c(2015,8))
+
+dygraph(pax.ts, main="PHL Pax W/ Custom Moving Avg", ylab = "Monthly Passengers (000s)") %>% dyRangeSelector()%>%
+  dyRoller(rollPeriod = 1)
+
+```
+
+###  TS Plot w/ Shading, Annotation and "Follow" Legend
+```{r, echo=T}
+emp.ts <- ts(phl$emp, frequency = 12, start = c(2007, 1), end = c(2015,8))
+
+dygraph(emp.ts, main="PHL Area Monthly Employment", ylab="Monthly Employment") %>% dyRangeSelector()%>% 
+  dyShading(from = "2008-07-01", to = "2009-06-01") %>%
+  dyAnnotation("2008-12-01", text = "Great Recession", attachAtBottom = TRUE, width = 120) %>%
+  dyLegend(show = "follow")
+
+```
+
+### TS Plot w/ Actual & Predicted
+```{r, echo=T}
+pax.ts <- ts(phl$pax/1000, frequency = 12, start = c(2007, 1), end = c(2015,8))
+
+pax.hw <- HoltWinters(pax.ts)
+pred <- predict(pax.hw, n.ahead = 36, prediction.interval = TRUE)
+all <- cbind(pax.ts, pred)
+
+dygraph(all, main="PHL Monthly Pax", ylab = "Monthly Passengers (000s)") %>%
+  dySeries("pax.ts", label = "Actual") %>%
+  dySeries(c("pred.lwr", "pred.fit", "pred.upr"), label = "Predicted")
+
+```
+
+
 ## Plotly {.tabset}
 guide for using with R - https://plot.ly/r/
 using with ggplot2 - https://plot.ly/ggplot2/
 
 
-## ggvis {.tabset}
 
 
-## dygraph (Time Series Only) {.tabset}
