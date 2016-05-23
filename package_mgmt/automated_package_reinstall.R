@@ -8,7 +8,7 @@
 .libPaths()
 
 # change it to your own dir
-myPath = c("C:/Users/GRA/Documents/R/win-library/3.1") 
+myPath = c("C:/Users/GRA/Documents/R/win-library/3.3") 
 
 #Get currently installed packages
 package_df <- as.data.frame(installed.packages(myPath))  
