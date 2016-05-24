@@ -435,10 +435,22 @@ race2 <- data %>% dplyr::filter(year == "2015") %>% group_by(race2) %>% summaris
 
 ### Bubble Chart
 ```{r, echo = T}
-data2 <- data %>% group_by(date, race2) %>% summarise(total = n())
+pax.ts <- ts(phl$pax, frequency = 12, start = c(2007, 1), end = c(2015,8))
 
-plot_ly(data2, x = date, y = total, text = paste("Fatal Shootings ", total),
-        mode = "markers", color = race2)
+plot_ly(phl, x = date, y = pax, text = paste("Passengers: ", pax),
+        mode = "markers", color = month, size=pax) %>% 
+  layout(title = "PHL Monthly Passengers", xaxis = list(title=" "), yaxis = list(title="Passengers"))
 
 ```
+
+### Time Series w/ Smoother
+```{r, echo=T}
+p <- plot_ly(phl, x = date, y = pax)
+
+p %>% add_trace(y = fitted(loess(pax ~ as.numeric(date))), x = date) %>%
+  layout(title = "PHL Monthly Passengers", showlegend = FALSE, 
+         xaxis = list(title=" "), yaxis = list(title="Passengers"))
+```
+
+
 
